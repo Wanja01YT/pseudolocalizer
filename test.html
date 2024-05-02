@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudolocalizer!</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+
+        #pseudoText {
+            resize: both;
+            overflow: auto;
+        }
+
+        .btn-clip {
+            margin-top: 15px;
+            color: #262626;
+            border-color: #262626;
+            background-color: #ADADAD;
+        }
+
+        .margin {
+            margin-top: 10px;
+        }
+
+        a,
+        a:focus,
+        a.focus,
+        a:active,
+        a:hover {
+            color: #28a745;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .main-btn:focus {
+            border-color: #28a745 !important;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .copy-btn:focus {
+            border-color: #adadad !important;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+
+        .main-btn {
+            color: #ffffff !important;
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+            outline-color: #74db8c !important;
+            box-shadow: #74db8c !important;
+        }
+
+        .main-btn:hover,
+        .main-btn:focus,
+        .main-btn:active,
+        .main-btn.active,
+        .main-btn.disabled,
+        .main-btn:disabled,
+        .main-btn[disabled] {
+            color: #ffffff !important;
+            background-color: #269941 !important;
+            border-color: #269941 !important;
+            outline-color: #74db8c !important;
+            box-shadow: #74db8c !important;
+            border-color: #28a745 !important;
+        }
+
+        .copy-btn:hover,
+        .copy-btn:focus,
+        .copy-btn:active,
+        .copy-btn.active,
+        .copy-btn.disabled,
+        .copy-btn:disabled,
+        .copy-btn[disabled] {
+            color: #ffffff !important;
+            background-color: #292929 !important;
+            border-color: #292929 !important;
+            outline-color: #ADADAD !important;
+            box-shadow: #ADADAD !important;
+            border-color: #adadad !important;
+        }
+
+        ::selection {
+            background-color: #28a745;
+            color: #ffffff;
+        }
+
+        input[type="checkbox"] {
+            filter: sepia(100%) brightness(100%) hue-rotate(50deg) saturate(200%) contrast(100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center mb-2">ƥƨèúδôℓôçáℓïƺèř</h1>
+        <h4 style="color:darkgray;" class="text-center mb-4">pseudolocalize in your browser!</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="margin form-group">
+                    <textarea class="form-control" id="englishText" rows="5"
+                        placeholder="Enter English Text"></textarea>
+                </div>
+                <button type="button" class="main-btn btn btn-primary btn-block"
+                    onclick="convertToPseudo()">ƥƨèúδôℓôçáℓïƺè!</button>
+                <h5 style="color:#474747;" class="mt-3">ǒpțìŏñş</h5>
+                <div class="form-check mt-3">
+                    <input type="checkbox" class="form-check-input" id="addBrackets">
+                    <label class="form-check-label" for="addBrackets">[!!! Ì'M ÌMÞÓRTÂNT !!!]</label>
+                </div>
+                <div class="form-check mt-2">
+                    <input type="checkbox" class="form-check-input" id="convertToLower">
+                    <label class="form-check-label" for="convertToLower">ï ωáñƭ ƭô βè ƨ₥áℓℓ</label>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="margin form-group">
+                    <textarea class="form-control" id="pseudoText" rows="5"
+                        placeholder="Þƨèúδôℓôçáℓïƺèδ ƭèжƭ ωïℓℓ áƥƥèář λèřè" readonly></textarea>
+                    <button id="copyButton" class="copy-btn btn btn-primary btn-block btn-clip"
+                        onclick="copyToClipboard()">Copy
+                        Text</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer fixed-bottom py-3 bg-light">
+        <div class="container text-center">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <span style="font-weight: 500;" class="text-muted mb-2">pşεúδòļŏċåļǐźëδ вƴ <a style="font-weight: 650;"
+                        href="https://github.com/Wanja01YT">Wanja01YT</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function convertToPseudo() {
+            let englishText = document.getElementById('englishText').value;
+            const convertToLower = document.getElementById('convertToLower').checked;
+            if (convertToLower) {
+                englishText = englishText.toLowerCase();
+            }
+            let pseudoText = pseudolocalize(englishText);
+            if (document.getElementById('addBrackets').checked) {
+                pseudoText = "[ !!! " + pseudoText + " !!! ]";
+            }
+            document.getElementById('pseudoText').value = pseudoText;
+        }
+
+        function pseudolocalize(text) {
+            // Pseudolocalization logic: Replace letters and digits according to the given rule.
+            return text.split('').map(char => {
+                // If the character is a letter, replace it with a random pseudolocalized letter.
+                if (/[a-zA-Z]/.test(char)) {
+                    // Check if the original character is uppercase
+                    const isUpperCase = char === char.toUpperCase();
+                    const pseudoChar = pseudolocalizeLetter(char.toLowerCase()); // Convert to lowercase for mapping
+                    return isUpperCase ? pseudoChar.toUpperCase() : pseudoChar;
+                }
+                // If the character is a digit, replace it with a circled digit.
+                else if (/[1-9]/.test(char)) {
+                    return String.fromCharCode(9311 + parseInt(char)); // 9311 corresponds to circled digit 1 (U+2460).
+                }
+                // If the character is not a letter or digit, leave it unchanged.
+                else {
+                    return char;
+                }
+            }).join('');
+        }
+
+        function pseudolocalizeLetter(letter) {
+            // Map each letter to its corresponding pseudolocalized versions.
+            const letterMap = {
+                'a': ['α', 'ä', 'á', 'à', 'ā', 'ǎ', 'ă', 'å', 'å'],
+                'b': ['β', 'в', 'b', 'ƅ', 'ɓ', 'ь'],
+                'c': ['ċ', 'ç', 'ƈ', 'ć', 'č', 'ƈ', 'ɕ'],
+                'd': ['δ', 'đ', 'ɗ', 'ð', 'ď', 'ȡ', 'ɖ'],
+                'e': ['ε', 'ë', 'é', 'è', 'ē', 'ě', 'ҽ'],
+                'f': ['ſ', 'ƒ', 'ẝ', 'ᶂ', 'ḟ'],
+                'g': ['ģ', 'ϱ', 'ġ', 'ğ', 'ḡ', 'ɠ', 'ᶃ'],
+                'h': ['н', 'λ', 'ħ', 'ճ'],
+                'i': ['ι', 'ï', 'ı', 'ì', 'ī', 'ǐ', 'ĭ', 'ì', 'ì'],
+                'j': ['ĵ', 'j', 'ʝ', 'ȷ', 'ɟ'],
+                'k': ['ķ', 'қ', 'ƙ', 'ḱ', 'ḳ', 'ḵ'],
+                'l': ['ĺ', 'ļ', 'ł', 'ḷ', 'ḹ', 'ḻ', 'ḽ', 'ℓ'],
+                'm': ['ṃ', '₥', 'ṁ', 'm̃'],
+                'n': ['ŋ', 'ñ', 'ṇ', 'ṉ', 'ṋ', 'ռ', 'п'],
+                'o': ['ο', 'ö', 'ó', 'ò', 'ō', 'ǒ', 'ṍ', 'ṑ', 'ṓ', 'ṏ'],
+                'p': ['ƥ', 'ṗ', 'ρ', 'Ƥ', 'բ', 'ϱ'],
+                'q': ['ꝗ', '9', 'գ', 'զ'],
+                'r': ['ŕ', 'ŗ', 'ř', 'ȓ', 'ɾ', 'ɼ', 'г', 'ṙ', 'ṛ', 'ṝ', 'ṟ'],
+                's': ['ƨ', 'ṡ', 'ṣ', 'ṥ', 'ṧ', 'ṩ', 'ƽ'],
+                't': ['ţ', 'ț', 'ŧ', 'ƭ', 'ʈ', 'ᵵ'],
+                'u': ['υ', 'ü', 'ú', 'ù', 'ū', 'ǔ', 'ŭ', 'ũ', 'ʉ', 'ứ', 'ử', 'ữ'],
+                'v': ['ṽ', 'ṿ', 'ᶌ', 'ν', 'ѷ', 'ѵ', 'ʋ'],
+                'w': ['ŵ', 'ẁ', 'ẃ', 'ẅ', 'ẇ', 'ω', 'ẉ', 'ẘ', 'ⱳ', 'ɯ', 'ш'],
+                'x': ['ẋ', 'ҳ', 'ҳ', 'ж'],
+                'y': ['ƴ', '¥', 'ұ', 'ỷ', 'ẏ', 'ý', 'ɣ', 'γ', 'ỿ'],
+                'z': ['ż', 'ź', 'ꙁ', 'ꙃ', 'ƺ', 'ʐ'],
+                'A': ['Α', 'Ä', 'Á', 'À', 'Ā', 'Ǎ', 'Ă', 'Å', 'Å', 'Ѧ'],
+                'B': ['Ɓ', 'Ƅ', 'Ь', 'Ḃ', 'Ḅ', 'Ḇ'],
+                'C': ['Ċ', 'Ç', 'Ƈ', 'Ć', 'Č', 'Ƈ'],
+                'D': ['Δ', 'Đ', 'Ɗ', 'Ð', 'Ď', 'Ḏ', 'Ɖ', 'Ḓ', 'Ḑ'],
+                'E': ['Ε', 'Ë', 'É', 'È', 'Ē', 'Ě', 'Є', '£'],
+                'F': ['Ƒ', 'Ḟ', 'Ꞙ'],
+                'G': ['Ģ', 'Ğ', 'Ġ', 'Ğ', 'Ḡ', 'Ɠ', 'Ĝ'],
+                'H': ['Ħ', 'Ḧ', 'Ḩ', 'Ḫ', 'Ĥ'],
+                'I': ['Ι', 'Ï', 'I', 'Ì', 'Ī', 'Ǐ', 'Ĭ', 'Ì', 'Ì'],
+                'J': ['Ĵ', 'J', 'Ʝ', 'J̇'],
+                'K': ['Ķ', 'Қ', 'Ƙ', 'Ḵ', 'Ḳ', 'Ḱ'],
+                'L': ['Ĺ', 'Ļ', 'Ł', 'Ḷ', 'Ḹ', 'Ḻ', 'Ḽ'],
+                'M': ['Ṃ', 'Ϻ', 'Ṁ', 'M̃'],
+                'N': ['Ŋ', 'Ñ', 'Ṇ', 'Ṉ', 'Ṋ', 'Ռ', 'П'],
+                'O': ['Ο', 'Ö', 'Ó', 'Ò', 'Ō', 'Ǒ', 'Ṍ', 'Ṑ', 'Ṓ', 'Ṏ'],
+                'P': ['Þ', 'Ƥ', 'Ṗ', 'Ρ', 'Ƥ', 'Բ', 'Ρ'],
+                'Q': ['ⵕ', 'Ꝗ', 'Q'],
+                'R': ['Ŕ', 'Ŗ', 'Ř', 'Ȓ', 'Ṙ', 'Ṛ', 'Ṝ', 'Ṟ'],
+                'S': ['§', 'Ş', 'Ƨ', 'Ṡ', 'Ṣ', 'Ṥ', 'Ṧ', 'Ṩ', 'Ƽ'],
+                'T': ['Ţ', 'Ț', 'Ŧ', 'Ƭ', 'Ʈ', 'Ť'],
+                'U': ['У', 'Ü', 'Ú', 'Ù', 'Ū', 'Ǔ', 'Ŭ', 'Ũ', 'Ʉ', 'Ứ', 'Ử', 'Ữ'],
+                'V': ['Ṽ', 'Ṿ', 'ᶌ', 'Ν', 'Ѷ', 'Ѵ', 'Ʋ'],
+                'W': ['Ŵ', 'Ẁ', 'Ẃ', 'Ẅ', 'Ẇ', 'Ẉ', 'ẘ', 'ⱳ', 'Ɯ', 'Ш'],
+                'X': ['Ẋ', 'Ҳ', 'Ҳ', 'Ж'],
+                'Y': ['Ƴ', '¥', 'Ұ', 'Ỷ', 'Ẏ', 'Ý', 'Ɣ'],
+                'Z': ['Ż', 'Ź', 'Ẑ', 'Ꙁ', 'Ꙃ'],
+            };
+            // Get a random pseudolocalized version of the letter.
+            const pseudoLetters = letterMap[letter.toLowerCase()];
+            const randomIndex = Math.floor(Math.random() * pseudoLetters.length);
+            return pseudoLetters[randomIndex];
+        }
+
+        function copyToClipboard() {
+            const pseudoText = document.getElementById('pseudoText').value;
+            navigator.clipboard.writeText(pseudoText).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+
+</html>
