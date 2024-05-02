@@ -1,2 +1,3 @@
-# pseudolocalizer
-Convert your strings into pseudolocalized text in your browser.
+# ƥƨèúδôℓôçáℓïƺèř
+
+<p align=left><a href="https://wanja01yt.github.io/pseudolocalizer/">Try it out online!</a></p>
